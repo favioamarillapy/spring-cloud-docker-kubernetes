@@ -1,13 +1,13 @@
-package com.py.msvc.usuario;
+package com.py.msvc.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsuarioApplication {
+public class UsersApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsuarioApplication.class, args);
+		SpringApplication.run(UsersApplication.class, args);
 	}
 
 }

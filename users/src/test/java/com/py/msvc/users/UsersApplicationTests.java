@@ -1,10 +1,10 @@
-package com.py.msvc.usuario;
+package com.py.msvc.users;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UsuarioApplicationTests {
+class UsersApplicationTests {
 
 	@Test
 	void contextLoads() {
