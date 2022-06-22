@@ -17,4 +17,6 @@ public interface UserService {
     public User save(User entity);
 
     public void deleteById(Long id);
+
+    public Optional<User> findByEmail(String email);
 }

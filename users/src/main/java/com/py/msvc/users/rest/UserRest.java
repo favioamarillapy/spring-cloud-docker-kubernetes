@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,17 +22,17 @@ public class UserRest {
     private UserService userService;
 
     @GetMapping
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id){
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         Optional<User> user = userService.findById(id);
-        if (user.isPresent()){
-           return ResponseEntity
-                   .status(HttpStatus.OK)
-                   .body(user.get());
+        if (user.isPresent()) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(user.get());
         }
 
         return ResponseEntity
@@ -39,18 +41,32 @@ public class UserRest {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(User data){
+    public ResponseEntity<?> save(User data) {
+
+        if (userService.findByEmail(data.getEmail()).isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Collections.singletonMap("message", "User with email " + data.getEmail() + " already exist"));
+        }
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userService.save(data));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> edit(@PathVariable Long id, @RequestBody User data){
+    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody User data) {
         Optional<User> user = userService.findById(id);
-        if (user.isPresent()){
-
+        if (user.isPresent()) {
             User entity = user.get();
+
+            if (!data.getEmail().equalsIgnoreCase(entity.getEmail()) &&
+                    userService.findByEmail(data.getEmail()).isPresent()) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(Collections.singletonMap("message", "User with email " + data.getEmail() + " already exist"));
+            }
+
             entity.setName(data.getName());
             entity.setEmail(data.getEmail());
             entity.setPassword(data.getPassword());
@@ -66,9 +82,9 @@ public class UserRest {
     }
 
     @DeleteMapping
-    public ResponseEntity<Long> deleteById(Long id){
+    public ResponseEntity<Long> deleteById(Long id) {
         Optional<User> user = userService.findById(id);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             userService.deleteById(id);
 
             return ResponseEntity
