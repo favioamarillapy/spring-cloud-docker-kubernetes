@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("user")
 public class UserRest {
 
     @Autowired
@@ -24,6 +23,15 @@ public class UserRest {
     @GetMapping
     public List<User> findAll() {
         return userService.findAll();
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<?> findAllById(@RequestParam("ids") List<Long> ids) {
+        List<User> users = userService.findAllById(ids);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(users);
     }
 
     @GetMapping("/{id}")

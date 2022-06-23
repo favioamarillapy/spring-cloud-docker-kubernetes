@@ -34,4 +34,8 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
+    public List<User> findAllById(List<Long> ids){
+        return (List<User>) userRepository.findAllById(ids);
+    }
 }
