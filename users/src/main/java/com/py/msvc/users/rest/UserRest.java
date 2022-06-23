@@ -2,14 +2,11 @@ package com.py.msvc.users.rest;
 
 import com.py.msvc.users.entity.User;
 import com.py.msvc.users.service.UserService;
-import feign.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
